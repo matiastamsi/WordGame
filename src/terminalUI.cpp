@@ -16,15 +16,37 @@ void printPoints(string statusText, int n, string teams[], int points[])
     }
 }
 
-char askLanguage()
+string askLanguage()
 {
-    question:
-    cout << "If you want to play in English, please press 'e'."
-         << endl;
-    cout << "Jos haluat pelata suomeksi, paina 's'."
-         << endl;
-    char a;
-    cin >> a;
-    if (a != 'e' && a != 's') goto question;
-    return a;
+    string s;
+    do
+    {
+        /* The only hard coded part.
+        There is only so few options so
+        this will do for now.
+        */
+        cout << "If you want to play in English, please type 'eng'."
+             << endl;
+        cout << "Jos haluat pelata suomeksi, kirjoita 'fin'."
+             << endl;
+        cin >> s;
+    } while (s != "eng" && s != "fin");
+    return s;
+}
+
+int askInt(string s)
+{
+    // TODO: Check the input
+    cout << s << endl;
+    int n;
+    cin >> n;
+    return n;
+}
+
+string askString(string s)
+{
+    cout << s << endl;
+    string x;
+    cin >> x;
+    return x;
 }

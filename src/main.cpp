@@ -8,12 +8,12 @@ using namespace std;
 int main()
 {
     vector<string> instructions;
-    char l = askLanguage();
+    string language = askLanguage();
     string path;
-    if (l == 's')
-        path = "../instructions/instructionsFinnish.txt";
-    if (l == 'e')
-        path = "../instructions/instructionsEnglish.txt";
+    if (language == "fin")
+        path = "../instructions/Finnish.txt";
+    if (language == "eng")
+        path = "../instructions/English.txt";
     ifstream f(path);
     string line;
     while (getline(f, line))
@@ -21,4 +21,11 @@ int main()
         instructions.push_back(line);
     }
     f.close();
+    int teamsCount = askInt(instructions[1]);
+    string teams[teamsCount];
+    for (int i = 0; i < teamsCount; i++)
+    {
+        teams[i] = askString(instructions[2]);
+    }
+    int rounds = askInt(instructions[0]);
 }

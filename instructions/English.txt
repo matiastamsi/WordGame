@@ -1,0 +1,3 @@
+How many rounds? Give a number 1-100:
+How many teams play?
+Give a team:

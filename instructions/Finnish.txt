@@ -1,0 +1,3 @@
+Kuinka monta kierrosta pelataan? Anna numero 0-100: 
+Kuinka monta tiimii pelaa? 
+Anna tiimi: 
