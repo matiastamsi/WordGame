@@ -10,8 +10,10 @@ int main()
     vector<string> instructions;
     char l = askLanguage();
     string path;
-    if (l == 's') path = "../instructionsFinnish.txt";
-    if (l == 'e') path = "../instructionsEnglish.txt";
+    if (l == 's')
+        path = "../instructions/instructionsFinnish.txt";
+    if (l == 'e')
+        path = "../instructions/instructionsEnglish.txt";
     ifstream f(path);
     string line;
     while (getline(f, line))
