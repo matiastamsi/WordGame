@@ -33,3 +33,7 @@ This program is made by C++.
 - User interface:
   - [1. Option] terminal
   - [2. Option] graphical
+
+- Game availability:
+  - [1. Option] local
+  - [2. Option] online
