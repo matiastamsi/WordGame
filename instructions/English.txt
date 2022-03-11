@@ -1,3 +1,5 @@
-How many rounds? Give a number 1-100:
 How many teams play?
-Give a team:
+Give a name for one of the teams:
+If you want to decide the members of each team, please press 'd'. If you want random teams, please press 'r':
+Give a team member's name:
+How many rounds? Give a number 1-100:

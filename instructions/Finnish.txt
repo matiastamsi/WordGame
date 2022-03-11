@@ -1,3 +1,5 @@
+Kuinka monta tiimiä pelaa?
+Anna tiimin nimi:
+Jos haluatte valita tiimit paina 'd'. Jos haluatte tiimit arvottavan, niin painakaa 'r':
+Anna tiimiläisen nimi:
 Kuinka monta kierrosta pelataan? Anna numero 0-100: 
-Kuinka monta tiimii pelaa? 
-Anna tiimi: 
