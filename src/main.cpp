@@ -1,6 +1,6 @@
-#include "../src/includes/terminalUI.h"
-#include "../src/includes/team.h"
-#include "../src/includes/logic.h"
+#include "../headers/terminalUI.h"
+#include "../headers/team.h"
+#include "../headers/logic.h"
 #include <vector>
 #include <fstream>
 
