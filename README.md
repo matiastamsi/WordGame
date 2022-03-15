@@ -9,16 +9,15 @@ This program is made by C++.
 ## Goals
 
 - Team forming:
-  - [1. Option] specific teams
-  - [2. Option] randomly form the teams
+  - [1. Option] specific teams :heavy_check_mark:
+  - [2. Option] randomly form the teams :heavy_check_mark:
 
 - Words used:
   - [1. Option] custom words
   - [2. Option] use a dictionary
 
 - Rounds:
-  - [1. Option] the number of rounds is defined at the beginning
-  - [2. Option] playing till infinity
+  - [1. Option] the number of rounds is defined at the beginning :heavy_check_mark:
 
 - Keeping track:
   - [1. Option] points
