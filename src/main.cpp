@@ -38,13 +38,13 @@ void initializeInstructions()
 
 void createRandomTeams()
 {
-    // Ask how many participants
+    // Ask how many participants.
     printlString(instructions[5]);
     int count = seeInt();
     vector<string> participants;
     for (int i = 0; i < count; i++)
     {
-        // Tell to give a participant
+        // Tell to give a participant.
         printlString(instructions[6]);
         string name = seeString();
         participants.push_back(name);
@@ -54,9 +54,10 @@ void createRandomTeams()
     {
         for (unsigned int i = 0; i < teams.size(); i++)
         {
-            if (participants.size() > 0)
+            int size = participants.size();
+            if (size > 0)
             {
-                uniform_int_distribution<int> d(0, participants.size() - 1);
+                uniform_int_distribution<int> d(0, size - 1);
                 int r = d(g);
                 teams[i].addTeamMember(participants[r]);
                 participants.erase(participants.begin() + r);
@@ -112,6 +113,6 @@ int main()
     {
         printlString(t.name + ": " + t.printMembers());
     }
-    /*printlString(instructions[7]);
-    int rounds = seeInt();*/
+    printlString(instructions[7]);
+    int rounds = seeInt();
 }
