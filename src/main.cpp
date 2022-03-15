@@ -3,6 +3,7 @@
 #include "../headers/logic.h"
 #include <vector>
 #include <fstream>
+#include <random>
 
 using namespace std;
 
@@ -17,7 +18,8 @@ void initializeInstructions()
     {
         printlString("If you want to play in English,"
                      " please type 'eng'.");
-        printlString("Jos haluat pelata suomeksi, kirjoita 'fin':");
+        printlString("Jos haluat pelata suomeksi,"
+                     " kirjoita 'fin':");
         s = seeString();
     } while (s != "eng" && s != "fin");
     string path;
@@ -36,10 +38,47 @@ void initializeInstructions()
 
 void createRandomTeams()
 {
+    // Ask how many participants
+    printlString(instructions[5]);
+    int count = seeInt();
+    vector<string> participants;
+    for (int i = 0; i < count; i++)
+    {
+        // Tell to give a participant
+        printlString(instructions[6]);
+        string name = seeString();
+        participants.push_back(name);
+    }
+    mt19937 g(random_device{}());
+    while (participants.size() > 0)
+    {
+        for (unsigned int i = 0; i < teams.size(); i++)
+        {
+            if (participants.size() > 0)
+            {
+                uniform_int_distribution<int> d(0, participants.size() - 1);
+                int r = d(g);
+                teams[i].addTeamMember(participants[r]);
+                participants.erase(participants.begin() + r);
+            }
+        }
+    }
 }
 
 void createSpecificTeams()
 {
+    for (unsigned int i = 0; i < teams.size(); i++)
+    {
+        // Ask how many members are in the team.
+        printlString(instructions[3] + " " + teams[i].name + "?");
+        int count = seeInt();
+        for (int j = 0; j < count; j++)
+        {
+            printlString(instructions[4] + " (" + teams[i].name + ")");
+            string name = seeString();
+            teams[i].addTeamMember(name);
+        }
+    }
 }
 
 void initializeTeams()
@@ -69,6 +108,10 @@ int main()
 {
     initializeInstructions();
     initializeTeams();
-    printlString(instructions[4]);
-    int rounds = seeInt();
+    for (team t : teams)
+    {
+        printlString(t.name + ": " + t.printMembers());
+    }
+    /*printlString(instructions[7]);
+    int rounds = seeInt();*/
 }

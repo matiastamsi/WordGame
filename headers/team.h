@@ -27,6 +27,14 @@ struct team
     {
         points += p;
     }
+
+    std::string printMembers() {
+        std::string s = "";
+        for (std::string m : members) {
+            s += " " + m;
+        }
+        return s;
+    }
 };
 
 #endif
