@@ -10,6 +10,8 @@ using namespace std;
 // Globals
 vector<string> instructions;
 vector<team> teams;
+vector<string> words;
+string language;
 
 void initializeInstructions()
 {
@@ -25,7 +27,7 @@ void initializeInstructions()
     string path;
     if (s == "fin")
         path = "../instructions/Finnish.txt";
-    if (s == "eng")
+    else if (s == "eng")
         path = "../instructions/English.txt";
     ifstream f(path);
     string line;
@@ -34,6 +36,8 @@ void initializeInstructions()
         instructions.push_back(line);
     }
     f.close();
+    // Save the language
+    language = s;
 }
 
 void createRandomTeams()
@@ -74,7 +78,7 @@ void createSpecificTeams()
         printlString(instructions[3] + " " + teams[i].name + "?");
         int count = seeInt();
         for (int j = 0; j < count; j++)
-        {
+        { // Tell to give a participant.
             printlString(instructions[4] + " (" + teams[i].name + ")");
             string name = seeString();
             teams[i].addTeamMember(name);
@@ -105,14 +109,44 @@ void initializeTeams()
         createSpecificTeams();
 }
 
+void initializeWords()
+{
+    string s;
+    do
+    { // Ask whether custom or dictionary words are used
+        printlString(instructions[8]);
+        s = seeString();
+    } while (s != "c" && s != "d");
+    string path;
+    if (s == "c")
+        path = "../words/custom.txt";
+    if (s == "d")
+    {
+        if (language == "eng")
+            path = "../words/dictionaries/EnglishDictionary.txt";
+        else if (language == "fin")
+            path = "../words/dictionaries/FinnishDictionary.txt";
+    }
+    ifstream f(path);
+    string line;
+    while (getline(f, line))
+    {
+        words.push_back(line);
+    }
+    f.close();
+}
+
 int main()
 {
     initializeInstructions();
     initializeTeams();
+    printlString("The teams:");
     for (team t : teams)
     {
         printlString(t.name + ": " + t.printMembers());
     }
+    // Ask how many rounds
     printlString(instructions[7]);
     int rounds = seeInt();
+    initializeWords();
 }

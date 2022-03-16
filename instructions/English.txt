@@ -6,3 +6,4 @@ Give a team member's name:
 How many participants in total?
 Give a participant:
 How many rounds? Give a number 1-100:
+If you want to use custom words, please type 'c'. If you want to use default dictionary, please type 'd':
