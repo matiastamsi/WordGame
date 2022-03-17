@@ -8,48 +8,17 @@
 using namespace std;
 
 // Globals
-vector<string> instructions;
 vector<team> teams;
 vector<string> words;
-string language;
-
-void initializeInstructions()
-{
-    string s;
-    do
-    {
-        printlString("If you want to play in English,"
-                     " please type 'eng'.");
-        printlString("Jos haluat pelata suomeksi,"
-                     " kirjoita 'fin':");
-        s = seeString();
-    } while (s != "eng" && s != "fin");
-    string path;
-    if (s == "fin")
-        path = "../instructions/Finnish.txt";
-    else if (s == "eng")
-        path = "../instructions/English.txt";
-    ifstream f(path);
-    string line;
-    while (getline(f, line))
-    {
-        instructions.push_back(line);
-    }
-    f.close();
-    // Save the language
-    language = s;
-}
 
 void createRandomTeams()
 {
-    // Ask how many participants.
-    printlString(instructions[5]);
+    printlString("How many participants in total?");
     int count = seeInt();
     vector<string> participants;
     for (int i = 0; i < count; i++)
     {
-        // Tell to give a participant.
-        printlString(instructions[6]);
+        printlString("Give a participant's name: ");
         string name = seeString();
         participants.push_back(name);
     }
@@ -74,12 +43,12 @@ void createSpecificTeams()
 {
     for (unsigned int i = 0; i < teams.size(); i++)
     {
-        // Ask how many members are in the team.
-        printlString(instructions[3] + " " + teams[i].name + "?");
+        
+        printlString("How many team members in a team called" + teams[i].name + "?");
         int count = seeInt();
         for (int j = 0; j < count; j++)
-        { // Tell to give a participant.
-            printlString(instructions[4] + " (" + teams[i].name + ")");
+        { 
+            printlString("Give "+ teams[i].name + "'s member's name:");
             string name = seeString();
             teams[i].addTeamMember(name);
         }
@@ -88,11 +57,11 @@ void createSpecificTeams()
 
 void initializeTeams()
 {
-    printlString(instructions[0]);
+    printlString("How many teams play?");
     int teamsCount = seeInt();
     for (int i = 0; i < teamsCount; i++)
     {
-        printlString(instructions[1]);
+        printlString("Give a name for one of the teams:");
         string name = seeString();
         team t(name);
         teams.push_back(t);
@@ -100,7 +69,7 @@ void initializeTeams()
     string s;
     do
     {
-        printlString(instructions[2]);
+        printlString("If you want to decide the members of each team, please press 'd'. If you want random teams, please press 'r':");
         s = seeString();
     } while (s != "r" && s != "d");
     if (s == "r")
@@ -113,8 +82,8 @@ void initializeWords()
 {
     string s;
     do
-    { // Ask whether custom or dictionary words are used
-        printlString(instructions[8]);
+    {
+        printlString("If you want to use custom words, please type 'c'. If you want to use default dictionary, please type 'd':");
         s = seeString();
     } while (s != "c" && s != "d");
     string path;
@@ -122,9 +91,13 @@ void initializeWords()
         path = "../words/custom.txt";
     if (s == "d")
     {
-        if (language == "eng")
+        string l;
+        do {
+            printlString("There is a possibility to use Finnish or English dictionaries. To choose Finnish type 'fin' and to choose English type 'eng': ");
+        } while (l != "eng" && l != "fin");
+        if (l == "eng")
             path = "../words/dictionaries/EnglishDictionary.txt";
-        else if (language == "fin")
+        else if (l == "fin")
             path = "../words/dictionaries/FinnishDictionary.txt";
     }
     ifstream f(path);
@@ -138,15 +111,13 @@ void initializeWords()
 
 int main()
 {
-    initializeInstructions();
     initializeTeams();
     printlString("The teams:");
     for (team t : teams)
     {
         printlString(t.name + ": " + t.printMembers());
     }
-    // Ask how many rounds
-    printlString(instructions[7]);
+    printlString("How many rounds? Give a number 1-100:");
     int rounds = seeInt();
     initializeWords();
 }

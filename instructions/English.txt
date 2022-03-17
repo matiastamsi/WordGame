@@ -1,9 +1,0 @@
-How many teams play?
-Give a name for one of the teams:
-If you want to decide the members of each team, please press 'd'. If you want random teams, please press 'r':
-How many team members in a team called
-Give a team member's name:
-How many participants in total?
-Give a participant:
-How many rounds? Give a number 1-100:
-If you want to use custom words, please type 'c'. If you want to use default dictionary, please type 'd':
