@@ -17,7 +17,7 @@ This program is made by C++.
   - [2. Option] use a dictionary (Finnish or English) :heavy_check_mark:
 
 - Rounds:
-  - [1. Option] the number of rounds is defined at the beginning :heavy_check_mark:
+  - The number of rounds is defined at the beginning :heavy_check_mark:
 
 - Keeping track:
   - [1. Option] points
