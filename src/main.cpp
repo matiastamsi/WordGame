@@ -5,12 +5,17 @@
 #include <fstream>
 #include <random>
 #include <chrono>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 
 using namespace std;
 
 // Globals
 vector<team> teams;
 vector<string> words;
+condition_variable cv;
+char answer;
 
 void createRandomTeams()
 {
@@ -122,7 +127,38 @@ string getRandomWord()
     return word;
 }
 
-int turn(int duration)
+void handleWhenEveryTeamCanGuess()
+{
+    string s;
+    do
+    {
+        printlString("Now every team can guess! If some team got it right, type 'r'. If nobody knew, type 's'.");
+        s = seeString();
+    } while (s != "r" && s != "s");
+    if (s == "r")
+    {
+        printlString("If some team got extra points, type team's name.");
+        printlString("The teams are: ");
+        for (team t : teams)
+        {
+            printlString(t.name);
+        }
+        string t = seeString();
+        for (unsigned int i = 0; i < teams.size(); i++)
+        {
+            if (teams[i].name == t)
+                teams[i].points++;
+        }
+    }
+}
+
+void handleAnswer()
+{
+    answer = seeChar();
+    cv.notify_one();
+}
+
+int turn(int d)
 {
     int points = 0;
     string s;
@@ -131,25 +167,33 @@ int turn(int duration)
         printlString("When you are ready, press 'r'. Then one team member explains while other team members try to guess.");
         s = seeString();
     } while (s != "r");
-    auto start = chrono::system_clock::now();
-    auto end = chrono::system_clock::now();
-    chrono::duration<double> time = end - start;
+    chrono::duration<int> duration = chrono::seconds{d};
     string word = getRandomWord();
-
-    while (time <= chrono::seconds{duration})
+    while (duration.count() > 0)
     {
-        end = chrono::system_clock::now();
-        auto oldTime = time;
-        time = end - start;
-        if ((int)time.count() - (int)oldTime.count() > 10)
+        thread th(handleAnswer);
+        mutex mtx;
+        unique_lock<mutex> lck(mtx);
+        while (cv.wait_for(lck, chrono::seconds(1)) == cv_status::timeout)
         {
-            int timeLeft = duration - ((int)time.count());
-            printlString("Time left: " + to_string(timeLeft) + " s");
-            printlString("Explain: " + word);
-            printlString("Correct: type 'c' (+1p). Skip: press 's' (-1p).");
+            duration = duration - chrono::seconds{1};
+            if (duration.count() < 0)
+            {
+                th.detach();
+                handleWhenEveryTeamCanGuess();
+                return points;
+            }
+            printlString("Time left: " + to_string(duration.count()));
+            printlString("Explain word: " + word);
+            printlString("Correct answer (+1p): press 'c'. Skip word (-1p): press 's'.");
         }
+        if (answer == 'c')
+            points += 1;
+        if (answer == 's')
+            points -= 1;
+        word = getRandomWord();
+        th.join();
     }
-
     return points;
 }
 
